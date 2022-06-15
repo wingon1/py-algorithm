@@ -1,5 +1,6 @@
 import unittest
 
+
 # 그리디 알고리즘 탐욕법 - 현재상황에서 지금 당장 좋은 것만 고르는 방법
 
 ###############################################################################
@@ -13,21 +14,43 @@ def greedy01(money):
     coins = [500, 100, 50, 10]
 
     # 큰 단위 화폐부터 차례대로 확인
-    for i in coins :
-        count += money // i     # 몫
-        money = money % i       # 나머지
+    for i in coins:
+        count += money // i  # 몫
+        money = money % i  # 나머지
     return count
+
 
 # 시간 복잡도 O(k)
 ################################################################################
 
-def greedy02(param):
-    return param
 
+################################################################################
+# 2. 큰수의 법칙
+# items list중 가장 큰 수를 K번 반복하여 M번 더 하시오
+def greedy02(items, M, K):
+    items.sort(reverse=True)
+    res = 0
+    kcout = 0
+
+    for i in range(M) :
+        if(K > kcout) :
+            res += items[0]
+            kcout += 1
+        else :
+            res += items[1]
+            kcout = 0
+    print(res)
+    return res
+
+################################################################################
 
 class GreedyTest(unittest.TestCase):
     def test_greedy01(self):
-        self.assertEqual(greedy01(1260), 6)  # add assertion here
+        self.assertEqual(greedy01(1260), 6)
+
+    def test_greedy02(self):
+        self.assertEqual(greedy02([2, 4, 5, 4, 6], 8, 3), 46)
+        self.assertEqual(greedy02([3, 4, 3, 4, 3], 7, 2), 28)
 
 
 if __name__ == '__main__':
